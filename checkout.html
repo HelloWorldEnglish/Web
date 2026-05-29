@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes - HelloWorld</title>
+    
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a1434; 
+            --text-dark: #f6fbff;
+            --text-dark-muted: #a4b2c6;
+            --primary: #89dcfd; 
+            --accent: #8aa5ff; 
+            --button: #1971af;
+            --accent-glow: #df7afe;
+            /* Tarjetas laterales más visibles */
+            --card-dark-bg: rgba(255, 255, 255, 0.05); 
+            --card-dark-border: rgba(255, 255, 255, 0.12); 
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 6rem 2rem 4rem 2rem; /* Espacio extra para el header */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* HEADER HELLOWORLD */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .logo span.blue {
+            color: var(--primary);
+        }
+
+        .logo span.glow {
+            color: var(--accent-glow);
+            text-shadow: 0 0 10px rgba(223, 122, 254, 0.5); /* Efecto neón sutil */
+        }
+
+        h2, h3 {
+            font-family: 'Satoshi', sans-serif;
+            margin-top: 0;
+        }
+
+        /* Contenedor Principal */
+        .pricing-section {
+            text-align: center;
+            max-width: 1100px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .pricing-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-section > p {
+            color: var(--text-dark-muted);
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        /* Grid de 3 columnas */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            align-items: center; 
+        }
+
+        /* Estilo Base de las Tarjetas (MÁS VISIBLES AHORA) */
+        .glass-card {
+            background: var(--card-dark-bg);
+            border: 1px solid var(--card-dark-border);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); 
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* PACK 2: EL DESTACADO */
+        .glass-card.featured {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, rgba(41, 52, 255, 0.12) 0%, rgba(255,255,255,0.04) 100%);
+            transform: scale(1.05); 
+            box-shadow: 0 0 40px rgba(41, 52, 255, 0.2);
+            z-index: 2;
+        }
+
+        .glass-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 10px 50px rgba(41, 52, 255, 0.3);
+        }
+
+        /* Etiqueta Superior del Pack 2 */
+        .badge-featured {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--primary), var(--accent-glow));
+            color: white;
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(223, 122, 254, 0.4);
+            white-space: nowrap;
+        }
+
+        /* Tipografía de Precios y Títulos */
+        .pack-title {
+            font-size: 1.6rem;
+            color: var(--text-dark); /* Blanco brillante para todos los títulos */
+            margin-bottom: 0.5rem;
+        }
+
+        .pack-desc {
+            color: #d1d9e6; /* Gris más claro para que resalte más */
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+            min-height: 45px;
+        }
+
+        .price-container {
+            margin-bottom: 2rem;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--text-dark-muted);
+            font-size: 1.1rem;
+            margin: 0 0 0.3rem 0;
+            display: block;
+        }
+
+        .price {
+            font-family: 'Satoshi', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 0;
+            line-height: 1;
+            color: var(--text-dark); 
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-dark-muted);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .promo-text {
+            color: #4ade80; 
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: block;
+            margin-top: 0.8rem;
+        }
+
+        /* Lista de Beneficios */
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2.5rem 0;
+        }
+
+        .features-list li {
+            padding: 0.6rem 0;
+            color: #e2e8f0; /* Letras de beneficios más visibles */
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .featured .features-list li::before {
+            color: var(--accent-glow);
+        }
+
+        /* Botones de Pago (UNIFICADOS EN AZUL PARA TODOS) */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1.1rem;
+            border-radius: 12px;
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            cursor: pointer;
+            margin-top: auto; 
+            background: var(--button); /* Fondo azul por defecto */
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(41, 52, 255, 0.3);
+        }
+
+        .btn:hover {
+            background: #1f27e6;
+            box-shadow: 0 6px 20px rgba(41, 52, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Responsividad para móviles */
+        @media (max-width: 900px) {
+            .glass-card.featured {
+                transform: scale(1);
+            }
+            .glass-card.featured:hover {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <a href="index.html" class="logo">Hello<span class="blue">World</span><span class="glow"></span></a>
+</header>
+
+<section class="pricing-section">
+    <h2>Invierte en tu Carrera Técnica</h2>
+    <p>Elige el plan que mejor se adapte a tu nivel y urgencia. Sin contratos amarrados.</p>
+
+    <div class="pricing-grid">
+        
+        <div class="glass-card">
+            <h3 class="pack-title">Emergency Drill</h3>
+            <p class="pack-desc">Ideal para pulir detalles finales antes de una entrevista ya programada.</p>
+            
+            <div class="price-container">
+                <p class="price">$69.000<span> CLP</span></p>
+                <p class="old-price">&nbsp;</p> </div>
+
+            <ul class="features-list">
+                <li>1 Sesión individual (90 min)</li>
+                <li>Work-driven Content: Trabajamos directamente sobre el material que tú necesitas</li>
+                <li>Feedback correctivo inmediato</li>
+            </ul>
+
+            <a href="LINK_MP_1" class="btn">Iniciar Programa</a>
+        </div>
+
+        <div class="glass-card featured">
+            <span class="badge-featured">Más Elegido</span>
+            <h3 class="pack-title">Interview Ready</h3>
+            <p class="pack-desc">El programa ideal para preparar tu inglés técnico de forma constante y sólida.</p>
+            
+            <div class="price-container">
+                <span class="old-price">$200.000 CLP</span>
+                <p class="price">$159.000<span> CLP</span></p>
+                <span class="promo-text">Ahorra $41.000 en tu 1er mes de Onboarding</span>
+            </div>
+
+            <ul class="features-list">
+                <li>4 Sesiones mensuales (1 por semana).</li>
+                <li>Coaching 1:1 totalmente enfocado en tu realidad laboral</li>
+                <li>Estructura STAR para entrevistas</li>
+                <li>Soporte directo vía WhatsApp</li>
+            </ul>
+
+            <a href="https://mpago.la/2MsrBuh" class="btn">Iniciar Programa</a>
+        </div>
+
+        <div class="glass-card">
+            <h3 class="pack-title">Long-Term Bulk</h3>
+            <p class="pack-desc">Inmersión total para desarrolladores que buscan un plan a largo plazo.</p>
+            
+            <div class="price-container">
+                <p class="price">$319.000<span> CLP</span></p>
+                <p class="old-price">&nbsp;</p>
+            </div>
+
+            <ul class="features-list">
+                <li>8 Sesiones bimensuales</li>
+                <li>Simulacros completos de situaciones reales</li>
+                <li>Enfoque en metas de largo plazo</li>
+                <li>Acompañamiento constante durante dos meses</li>
+            </ul>
+
+            <a href="LINK_MP_3" class="btn">Iniciar Programa</a>
+        </div>
+
+    </div>
+</section>
+
+</body>
+</html>

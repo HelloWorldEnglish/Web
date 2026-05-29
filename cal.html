@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda tu Diagnóstico | HelloWorld</title>
+    
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a1434; 
+            --text-dark: #f6fbff;
+            --text-dark-muted: #a4b2c6;
+            --primary: #2934ff; 
+            --accent: #8aa5ff; 
+            --accent-glow: #df7afe;
+            --card-dark-bg: rgba(255, 255, 255, 0.03);
+            --card-dark-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(16px);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-dark);
+            line-height: 1.6; 
+            -webkit-font-smoothing: antialiased; 
+            overflow-x: hidden; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2, h3, h4, .logo-text { font-family: 'Satoshi', sans-serif; }
+        a { text-decoration: none; }
+
+        /* =========================================
+           FONDOS ANIMADOS (Profundidad)
+           ========================================= */
+        .ambient-glow { 
+            position: absolute; 
+            border-radius: 50%; 
+            filter: blur(80px); 
+            opacity: 0.3; 
+            z-index: 0; 
+            animation: float 10s infinite alternate ease-in-out; 
+            pointer-events: none; 
+        }
+        .glow-1 { top: -50px; left: -100px; width: 400px; height: 400px; background: var(--primary); }
+        .glow-2 { bottom: 10%; right: -50px; width: 500px; height: 500px; background: var(--accent-glow); animation-delay: -5s; }
+        
+        @keyframes float { 
+            0% { transform: translateY(0) translateX(0); } 
+            100% { transform: translateY(30px) translateX(20px); } 
+        }
+
+        /* =========================================
+           TEXTOS Y BADGES
+           ========================================= */
+        .gradient-text { 
+            background: linear-gradient(120deg, #f6fbff 0%, var(--accent) 50%, var(--accent-glow) 100%); 
+            background-size: 200% 200%; 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            animation: gradient-shift 5s ease infinite; 
+        }
+        @keyframes gradient-shift { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+
+        .badge { 
+            background: rgba(138, 165, 255, 0.1); 
+            color: var(--accent); 
+            border: 1px solid rgba(138, 165, 255, 0.2); 
+            padding: 6px 16px; 
+            border-radius: 50px; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            display: inline-block; 
+            margin-bottom: 16px; 
+            letter-spacing: 0.5px; 
+        }
+
+        /* =========================================
+           HEADER NAVBAR
+           ========================================= */
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 16px 32px; 
+            background: rgba(10, 20, 52, 0.6); 
+            backdrop-filter: var(--glass-blur); 
+            border: 1px solid var(--card-dark-border); 
+            border-radius: 100px; 
+            margin-top: 20px; 
+            width: 90%;
+            max-width: 1100px;
+            z-index: 100; 
+        }
+        .logo-container { display: flex; flex-direction: column; line-height: 1.1; }
+        .logo-text { font-weight: 900; font-size: 1.4rem; color: #fff; letter-spacing: -0.5px; }
+        .logo-sub { font-size: 0.65rem; color: var(--accent); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* =========================================
+           CONTENEDOR CALENDARIO
+           ========================================= */
+        .calendar-wrapper {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 1000px;
+            width: 95%;
+            margin: 60px auto 40px auto;
+        }
+
+        .calendar-wrapper h1 {
+            font-size: 2.8rem;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .calendar-wrapper > p {
+            color: var(--text-dark-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        .glass-card { 
+            background: var(--card-dark-bg); 
+            border: 1px solid var(--card-dark-border); 
+            backdrop-filter: var(--glass-blur); 
+            -webkit-backdrop-filter: var(--glass-blur); 
+            padding: 1rem; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
+            transition: transform 0.3s ease; 
+            min-height: 650px;
+            overflow: hidden;
+        }
+
+        @media(max-width: 768px) {
+            .calendar-wrapper h1 { font-size: 2.2rem; }
+            .glass-card { padding: 0; border-radius: 12px; min-height: 700px; }
+            nav { padding: 12px 20px; width: 95%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <nav>
+        <a href="index.html" class="logo-container">
+            <span class="logo-text">Hello<span style="color: var(--primary);">World</span></span>
+            <span class="logo-sub">Tech English Coaching</span>
+        </a>
+    </nav>
+
+    <main class="calendar-wrapper">
+        <span class="badge">Paso Final</span>
+        <h1 class="gradient-text">Agenda tu Diagnóstico</h1>
+        <p>Selecciona un horario para nuestra sesión técnica de 30 minutos. Recuerda dejar tus dudas en el formulario para optimizar nuestro tiempo juntos.</p>
+
+        <div class="glass-card">
+            <div style="width:100%;height:100%;min-height:650px;overflow:hidden" id="my-cal-inline-30min"></div>
+            <script type="text/javascript">
+              (function (C, A, L) { 
+                  let p = function (a, ar) { a.q.push(ar); }; 
+                  let d = C.document; 
+                  C.Cal = C.Cal || function () { 
+                      let cal = C.Cal; let ar = arguments; 
+                      if (!cal.loaded) { 
+                          cal.ns = {}; cal.q = cal.q || []; 
+                          d.head.appendChild(d.createElement("script")).src = A; 
+                          cal.loaded = true; 
+                      } 
+                      if (ar[0] === L) { 
+                          const api = function () { p(api, arguments); }; 
+                          const namespace = ar[1]; 
+                          api.q = api.q || []; 
+                          if(typeof namespace === "string"){
+                              cal.ns[namespace] = cal.ns[namespace] || api;
+                              p(cal.ns[namespace], ar);
+                              p(cal, ["initNamespace", namespace]);
+                          } else p(cal, ar); 
+                          return;
+                      } 
+                      p(cal, ar); 
+                  }; 
+              })(window, "https://app.cal.com/embed/embed.js", "init");
+              
+              Cal("init", "30min", {origin:"https://app.cal.com"});
+            
+              Cal.ns["30min"]("inline", {
+                elementOrSelector:"#my-cal-inline-30min",
+                config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"dark"},
+                calLink: "helloworldenglish/30min",
+              });
+            
+              Cal.ns["30min"]("ui", {
+                  "theme":"dark",
+                  "cssVarsPerTheme":{
+                      "light":{"cal-brand":"#bed9e5"},
+                      "dark":{"cal-brand":"#2934ff"} /* Ajustado al primary de tu landpage */
+                  },
+                  "hideEventTypeDetails":false,
+                  "layout":"month_view"
+              });
+            </script>
+            </div>
+    </main>
+
+</body>
+</html>
